@@ -61,8 +61,7 @@ if [ "$MYSQL_BACKUP" = true ] ; then
         	        s=$?
 
                 	if [[ $s -ne 0 ]]; then
-				message "Restarting Mysql ($s)"
-		                $SERVICE mysqld restart
+				message "MySQL problems at $d"
         	        fi
 	         fi
 	done
