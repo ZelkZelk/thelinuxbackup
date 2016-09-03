@@ -26,6 +26,9 @@ El script backup.sh lo ejecuto en el crontab dependiendo de la necesidad.
 CHANGELOG
 =========
 
+ * v0.2
+	- Soporte para PSQL 9+
+
  * v0.1
 
 	- Soporte para copiar carpetas enteras
