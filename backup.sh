@@ -67,6 +67,27 @@ if [ "$MYSQL_BACKUP" = true ] ; then
 	done
 fi
 
+##########################
+# PostgreSQL Full Backup #
+##########################
+
+if [ "$PSQL_BACKUP" = true ] ; then
+	PSQL_DUMP_DIR=$FOLDER$PSQL_DUMP_DST
+	$MKDIR -p $PSQL_DUMP_DIR
+	message "PostgreSQL Dumps [$PSQL_DUMP_DIR]";
+
+	if [[ ! -d $PSQL_DUMP_DIR ]] ; then
+		error "No existe $PSQL_DUMP_DIR, tal vez no se pudo crear con $MKDIR -p $PSQL_DUMP_DIR" "[FAIL] Backup @ $LABEL" "$EMAIL"
+		exit;
+	fi
+
+	for DB in $($CAT $PSQL_DATABASES)	
+	do
+		message "Database $DB";
+		$PG_DUMP --dbname="postgresql://$PSQL_USER:$PSQL_PASS@$PSQL_HOST:$PSQL_PORT/$DB" > "$PSQL_DUMP_DIR/$DB".sql 
+	done
+fi
+
 #####################
 # Mongo Full Backup #
 #####################
