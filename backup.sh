@@ -84,7 +84,12 @@ if [ "$PSQL_BACKUP" = true ] ; then
 	for DB in $($CAT $PSQL_DATABASES)	
 	do
 		message "Database $DB";
-		$PG_DUMP --dbname="postgresql://$PSQL_USER:$PSQL_PASS@$PSQL_HOST:$PSQL_PORT/$DB" > "$PSQL_DUMP_DIR/$DB".sql 
+
+		if [[ "$PSQL_DBNAME" = true ]] ; then
+			$PG_DUMP --dbname="postgresql://$PSQL_USER:$PSQL_PASS@$PSQL_HOST:$PSQL_PORT/$DB" > "$PSQL_DUMP_DIR/$DB".sql 
+		else
+			$PG_DUMP "postgresql://$PSQL_USER:$PSQL_PASS@$PSQL_HOST:$PSQL_PORT/$DB" > "$PSQL_DUMP_DIR/$DB".sql 
+		fi
 	done
 fi
 
